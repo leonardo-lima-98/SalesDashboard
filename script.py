@@ -1,4 +1,3 @@
-import db_func
 import random
 
 def gerar_numero():
@@ -11,7 +10,6 @@ def gerar_numero():
     else:  # 15% de chance (85% + 15% = 100%)
         return random.randint(11, 15)
 
-qtd = gerar_numero()
-print(qtd) 
-db_func.selecionar_aleatorio(qtd) 
-
+# Testando a função
+for _ in range(20):  # Gera 20 números para teste
+    print(gerar_numero(), end="\n")
