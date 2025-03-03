@@ -1,4 +1,4 @@
-import db_connection
+import db_connection as db_connection
 import json
 from sqlalchemy import select, func
 from models import Product, Customer

@@ -1,6 +1,6 @@
 import uuid
 import random
-import db_func
+import db_func as db_func
 from faker import Faker
 from models import Customer
 

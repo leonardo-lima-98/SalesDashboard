@@ -1,4 +1,4 @@
-import db_func
+import db_func as db_func
 import uuid
 import random
 import json
