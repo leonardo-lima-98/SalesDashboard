@@ -3,6 +3,7 @@ from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from models import Base
 
 # Carregar variáveis do .env
 load_dotenv()
@@ -41,7 +42,17 @@ def get_db_session(tunnel):
     engine = create_engine(db_url, connect_args={"options": f"-c search_path={RDS_SCHEMA}"})
     Session = sessionmaker(bind=engine)
     session = Session()
+    print("✅ Sessão criada!")
     return session, engine
+
+
+def open_connection():
+    # Criar túnel SSH e sessão do banco
+    tunnel = create_tunnel()
+    session, engine = get_db_session(tunnel)
+
+    Base.metadata.create_all(engine)
+    return tunnel, session, engine
 
 
 def close_connection(session, engine, tunnel):
