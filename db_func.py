@@ -34,8 +34,7 @@ def insert_new_customer(customer: list):
     
     session.add_all(customer)  # Agora adicionamos um objeto do modelo
     session.commit()  # Confirmando o insert
-    for customer in customer:
-        print(f"✅ Cliente {customer.name} inserido com sucesso!") 
+    print(f"✅ {len(customer)} Novos clientes inseridos com sucesso!") 
 
     db_connection.close_connection(session, engine, tunnel)
 
@@ -46,7 +45,6 @@ def insert_purchase(purchase: list):
     
     session.add_all(purchase)  # Adiciona a instância da compra ao banco
     session.commit()  # Comita a compra no banco
-    for purchase in purchase:
-        print(f"✅ Compra {purchase.product_id} inserida com sucesso!")
+    print(f"✅ {len(purchase)} Novos registros de compra inserido com sucesso!")
     
     db_connection.close_connection(session, engine, tunnel)

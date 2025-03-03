@@ -33,7 +33,7 @@ def create_customer():
     )
 
 customer = []
-for _ in range(45):
+for _ in range(4):
     customer.append(create_customer())
     
 db_func.insert_new_customer(customer)

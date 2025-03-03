@@ -51,8 +51,7 @@ def create_purchase(customer_id: str, item_data: list):
     return purchase  # Retorna uma lista de objetos Purchase
 
 purchases = []
-for _ in range(5):
+for _ in range(99):
     purchases.extend(create_purchase(get_customer_to_purchase(), get_itens_to_purchase()))
-    print(purchases[-1])
 
 db_func.insert_purchase(purchases)
