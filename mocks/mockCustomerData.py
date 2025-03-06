@@ -1,8 +1,8 @@
 import uuid
 import random
-import db_func as db_func
+import pandas as pd
 from faker import Faker
-from models import Customer
+from fast_zero.models import Customer
 
 # Criar instância do Faker
 fake = Faker(['pt_BR'])
@@ -32,8 +32,13 @@ def create_customer():
         created_at=created_at,
     )
 
-customer = []
-for _ in range(4):
-    customer.append(create_customer())
-    
-db_func.insert_new_customer(customer)
+# Criar lista de cliente
+customers = [create_customer() for _ in range(30000)]
+
+# Transformar em DataFrame
+data = pd.DataFrame([customer.to_dict() for customer in customers])
+
+# Exibir DataFrame
+# print(data)
+data.to_csv("customers.csv", index=False, encoding="utf-8")
+print("✅ Arquivo CSV gerado com sucesso!")
