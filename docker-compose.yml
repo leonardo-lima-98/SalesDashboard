@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgresDB3
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: 02RhajeVHhwAHkihczZe
+      POSTGRES_DB: LimaInterprise
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - psql_network
+      
+networks:
+  psql_network:
+    driver: bridge
+  
+volumes:
+  dbdata:
+    external: true

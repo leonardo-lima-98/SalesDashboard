@@ -3,7 +3,6 @@ import uuid
 import random
 import time
 import pandas as pd
-from fast_zero.models import Purchase
 from faker import Faker
 
 # Criar instância do Faker
@@ -33,7 +32,7 @@ def get_itens_to_purchase():
 
     # Iterando sobre as linhas do DataFrame e aplicando o cálculo de valor com desconto, se necessário
     item_data = [
-        (item["id"], round(item["value"] * (1 - item["offer_percent"] / 100), 2) if item["on_offer"] else item["value"])
+        (item[0], round(item[4] * (1 - item[6] / 100), 2) if item[5] else item[4])
         for _, item in itens_json_string.iterrows()  # Usando iterrows para acessar as linhas do DataFrame
     ]
     return item_data
@@ -44,13 +43,11 @@ def create_purchase(customer_id: str, item_data: list):
     purchase_date = fake.date_time_between_dates(datetime_start='-3y', datetime_end='now')  # Data da compra
 
     purchase = [
-        Purchase(
-            id=purchase_id,  # ID único para cada registro na tabela de compras
-            customer_id=customer_id,
-            product_id=item_id,
-            purchase_date=purchase_date,
-            purchase_value=item_value,
-            coupon_used=False  # Define um valor fixo para esta simulação
+        (
+            purchase_id,  # ID único para cada registro na tabela de compras
+            customer_id, item_id,
+            purchase_date, item_value,
+            False  # Define um valor fixo para esta simulação
         )
         for item_id, item_value in item_data
     ]
@@ -63,7 +60,7 @@ for _ in range(100000):  # Adicionando 5 compras
 
 # Transformar em DataFrame
 
-data = pd.DataFrame([purchase.to_dict() for purchase in purchases])
+data = pd.DataFrame([purchase for purchase in purchases])
 
 # Exibir DataFrame
 # print(data)

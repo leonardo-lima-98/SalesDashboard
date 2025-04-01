@@ -2,7 +2,6 @@ import uuid
 import random
 import pandas as pd
 from faker import Faker
-from fast_zero.models import Customer
 
 # Criar instância do Faker
 fake = Faker(['pt_BR'])
@@ -21,22 +20,18 @@ def create_customer():
     state_abbr = estados[state]
     created_at = fake.date_time_between_dates(datetime_start='-3y', datetime_end='now')
 
-    return Customer(
-        id=id,
-        name=customer_name,
-        email=email,
-        birthday=birthday,
-        country=country,
-        state=state,
-        state_abbr=state_abbr,
-        created_at=created_at,
+    return (
+        id, customer_name,
+        email, birthday,
+        country, state,
+        state_abbr, created_at,
     )
 
 # Criar lista de cliente
 customers = [create_customer() for _ in range(30000)]
 
 # Transformar em DataFrame
-data = pd.DataFrame([customer.to_dict() for customer in customers])
+data = pd.DataFrame([customer for customer in customers])
 
 # Exibir DataFrame
 # print(data)
